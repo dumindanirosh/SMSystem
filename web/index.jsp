@@ -13,10 +13,6 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <h1> hiiiiiiiiiiiiiiiiiii git test </h1>
-        Changes 2
-        duminda Changes3
-         duminda Changes4
         
         <%
          
