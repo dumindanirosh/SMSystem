@@ -13,5 +13,7 @@
     </head>
     <body>
         <h1>Club</h1>
+        
+        <a href="eventRegister.jsp">Register Event</a>
     </body>
 </html>

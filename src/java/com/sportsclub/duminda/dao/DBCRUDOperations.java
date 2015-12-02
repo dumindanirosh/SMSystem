@@ -7,7 +7,10 @@ package com.sportsclub.duminda.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,6 +36,7 @@ public class DBCRUDOperations {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            
         }
         return null;
     }
@@ -51,6 +55,37 @@ public class DBCRUDOperations {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException ex1) {
+              ex1.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+      public static int insertUpdateDeleteAutoIncrement(String sqlQuery, Connection conn) {
+
+        try {
+
+            if (conn != null) {  // connection success
+
+                Statement stmt = conn.createStatement();
+                int status = stmt.executeUpdate(sqlQuery,Statement.RETURN_GENERATED_KEYS);
+                ResultSet rs = stmt.getGeneratedKeys();
+                rs.next();
+                int autoIncrment = rs.getInt(1);
+               
+                return autoIncrment;
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException ex1) {
+              ex1.printStackTrace();
+            }
         }
         return 0;
     }

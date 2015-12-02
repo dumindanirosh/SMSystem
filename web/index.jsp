@@ -49,6 +49,7 @@
                 <tr>
                     <td></td>
                     <td>
+                        <input type="hidden" name="actionType" value="login"/>
                         <input type="submit" value="Login" />  
                         <input type="reset" value="Reset" />
                     </td>
@@ -59,6 +60,7 @@
          
          </br>
          
-         <a href="clubRegister.jsp">Club Register</a>
+         <a href="clubRegister.jsp">Club Register</a> </br>
+          <a href="athleteRegister.jsp">Athlete Register</a>
     </body>
 </html>

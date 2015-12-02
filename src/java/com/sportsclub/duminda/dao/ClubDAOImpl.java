@@ -8,6 +8,7 @@ package com.sportsclub.duminda.dao;
 import com.sportsclub.duminda.model.Club;
 import com.sportsclub.duminda.model.User;
 import java.sql.Connection;
+import java.sql.ResultSet;
 
 /**
  *
@@ -66,6 +67,42 @@ public class ClubDAOImpl {
         }
 
         return "error";
+    }
+
+    public Club getClub(String username) {
+
+        Connection conn = null;
+        try {
+
+            conn = DBConnection.getConnection();
+
+            if (conn != null) {
+                String loginQuery = "select * FROM club WHERE username='" + username + "'";
+
+                ResultSet rs = DBCRUDOperations.retriveData(loginQuery, conn);
+
+                if (rs.next()) {
+                    Club c = new Club();
+                    int clubId = rs.getInt("club_id");
+                    c.setClubId(clubId);
+
+                    return c;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+
+        }
+        return null;
     }
 
 }

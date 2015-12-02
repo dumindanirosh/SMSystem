@@ -14,9 +14,9 @@ import java.sql.DriverManager;
  */
 public class DBConnection {
     private static String driverName = "com.mysql.jdbc.Driver";
-    private static String url =  "jdbc:mysql://localhost:3307/sports_mgt_db";
+    private static String url =  "jdbc:mysql://localhost:3306/sports_mgt_db";
     private static String username = "root";
-    private static String password = "1234";
+    private static String password = "root123";
     
     
     // Establish DB Connection

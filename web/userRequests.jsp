@@ -27,7 +27,7 @@
             
             for(User u : users){
                 
-                out.println(u.getUsername() + " |" + u.getUserType() +"<a href=''> Accept </a> </br>" );
+                out.println(u.getUsername() + " |" + u.getUserType() +"<a href='user.action?actionType=acceptUser&username="+u.getUsername()+"'> Accept </a> </br>" );
             }
             
             %>

@@ -8,6 +8,14 @@
         <servlet-name>ClubController</servlet-name>
         <servlet-class>com.sportsclub.duminda.controller.ClubController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AthleteController</servlet-name>
+        <servlet-class>com.sportsclub.duminda.controller.AthleteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EventController</servlet-name>
+        <servlet-class>com.sportsclub.duminda.controller.EventController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserController</servlet-name>
         <url-pattern>/user.action</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>ClubController</servlet-name>
         <url-pattern>/club.action</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AthleteController</servlet-name>
+        <url-pattern>/athlete.action</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EventController</servlet-name>
+        <url-pattern>/event.action</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -36,49 +36,83 @@ public class UserController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
 
             // Retrieve client request parameters
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
+            String actionType = request.getParameter("actionType");
 
-            // set request parameter data to model object
-            User u = new User();
+            if (actionType.equals("login")) {
 
-            u.setUsername(username);
-            u.setPassword(password);
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
 
-            // Autenticate user credential data
-            UserDAOImpl userDAOImpl = new UserDAOImpl();
-            String status = userDAOImpl.login(u);
+                // set request parameter data to model object
+                User u = new User();
 
-            RequestDispatcher requestDispatcher = null;
-            if (status != null && status.equals("Admin")) {
+                u.setUsername(username);
+                u.setPassword(password);
 
-                // Establish Session Object
-                createSession(request, u);
-                createCookie(response, u);
-                requestDispatcher = request.getRequestDispatcher("adminDashboard.jsp");
-            } else if (status != null && status.equals("Club")) {
-                createSession(request, u);
-                createCookie(response, u);
-                requestDispatcher = request.getRequestDispatcher("clubDashboard.jsp");
-            } else if (status != null && status.equals("Athletes")) {
-                createSession(request, u);
-                createCookie(response, u);
-                requestDispatcher = request.getRequestDispatcher("athletesDashboard.jsp");
-            } else if (status != null && status.equals("notActive")) {
-                request.setAttribute("errorMessage", "User Login Not Active. Please Contact System Administrator");
-                requestDispatcher = request.getRequestDispatcher("index.jsp");
-            } else if (status != null && status.equals("invalid")) {
-                request.setAttribute("errorMessage", "Invalid Login Details");
-                requestDispatcher = request.getRequestDispatcher("index.jsp");
-            } else if (status != null && status.equals("error")) {
-                request.setAttribute("errorMessage", "System Error !!!. Please Contact System Administrator");
-                requestDispatcher = request.getRequestDispatcher("index.jsp");
+                // Autenticate user credential data
+                UserDAOImpl userDAOImpl = new UserDAOImpl();
+                String status = userDAOImpl.login(u);
+
+                RequestDispatcher requestDispatcher = null;
+                if (status != null && status.equals("Admin")) {
+
+                    // Establish Session Object
+                    createSession(request, u);
+                    createCookie(response, u);
+                    requestDispatcher = request.getRequestDispatcher("adminDashboard.jsp");
+                } else if (status != null && status.equals("Club")) {
+                    createSession(request, u);
+                    createCookie(response, u);
+                    requestDispatcher = request.getRequestDispatcher("clubDashboard.jsp");
+                } else if (status != null && status.equals("Athletes")) {
+                    createSession(request, u);
+                    createCookie(response, u);
+                    requestDispatcher = request.getRequestDispatcher("athletesDashboard.jsp");
+                } else if (status != null && status.equals("notActive")) {
+                    request.setAttribute("errorMessage", "User Login Not Active. Please Contact System Administrator");
+                    requestDispatcher = request.getRequestDispatcher("index.jsp");
+                } else if (status != null && status.equals("invalid")) {
+                    request.setAttribute("errorMessage", "Invalid Login Details");
+                    requestDispatcher = request.getRequestDispatcher("index.jsp");
+                } else if (status != null && status.equals("error")) {
+                    request.setAttribute("errorMessage", "System Error !!!. Please Contact System Administrator");
+                    requestDispatcher = request.getRequestDispatcher("index.jsp");
+                }
+
+                requestDispatcher.forward(request, response);
+
+            } else if (actionType.equals("acceptUser")) {
+
+                String username = request.getParameter("username");
+                // Autenticate user credential data
+                UserDAOImpl userDAOImpl = new UserDAOImpl();
+                String status = userDAOImpl.approveUserRequest(username);
+
+                RequestDispatcher requestDispatcher = null;
+                if (status != null && status.equals("success")) {
+
+                    request.setAttribute("successMessage", "User Approved Successfully.");
+
+                    requestDispatcher = request.getRequestDispatcher("success.jsp");
+                    requestDispatcher.forward(request, response);
+
+                } else if (status != null && status.equals("userExist")) {
+
+                    request.setAttribute("errorMessage", "Username Not Exist");
+                    requestDispatcher = request.getRequestDispatcher("userRequest.jsp");
+                    requestDispatcher.forward(request, response);
+
+                } else if (status != null && status.equals("error")) {
+                    requestDispatcher = request.getRequestDispatcher("error.jsp");
+
+                    request.setAttribute("errorMessage", "System Error !!!. Please Contact System Administrator");
+                    requestDispatcher.forward(request, response);
+
+                }
+
             }
-
-            requestDispatcher.forward(request, response);
 
         }
     }
